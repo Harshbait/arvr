@@ -16,7 +16,7 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
 
 import { buildMuseum, GALLERY_ZONES } from './museum.js';
 import { setupControls, updateMovement } from './controls.js';
-import { setupInteraction, updateInteraction, isPanelOpen } from './interaction.js';
+import { setupInteraction, updateInteraction, isPanelOpen, openInfoPanel } from './interaction.js';
 import { createAllExhibits, getExhibitObjects } from './exhibits.js';
 import { soundManager } from './audio.js';
 
@@ -72,6 +72,9 @@ canvasContainer.appendChild(renderer.domElement);
 // ─────────────────────────────────────────────────────────────────────────────
 const controls = new PointerLockControls(camera, renderer.domElement);
 scene.add(controls.getObject());
+
+// Expose internal references for automated capture and diagnostics
+window.__MUSEUM__ = { camera, controls, scene, renderer, getExhibitObjects, openInfoPanel };
 
 // Handle lock and unlock
 controls.addEventListener('lock', () => {
